@@ -56,7 +56,7 @@ int ldrLum = 0;
 
 // --- Door Control ---
 bool doorUnlocked = false;
-uint32_t unlockAt = 0;
+uint32_t doorUnlockedAt = 0;
 const uint32_t UNLOCK_DURATION = 3000; // 3 seconds
 
 // -----------------
@@ -148,7 +148,7 @@ void loop() {
         break;
       case 'o': // Door Unlocked
         doorUnlocked = true;
-        unlockAt = millis();
+        doorUnlockedAt = millis();
         ble.println("Door=Unlocked");
         break;
       default:
@@ -160,7 +160,7 @@ void loop() {
 
   // ----- Auto-Lock Door -----
 
-  if (doorUnlocked && (millis() - unlockAt >= UNLOCK_DURATION)) {
+  if (doorUnlocked && (millis() - doorUnlockedAt >= UNLOCK_DURATION)) {
     doorUnlocked = false;
   }
 
